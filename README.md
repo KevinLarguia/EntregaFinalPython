@@ -1,7 +1,6 @@
 # Mi Blog - Entrega Final Módulo Python
 
-Aplicación web de blog desarrollada con Python y Django como proyecto final de la Diplomatura en Python.
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/a85e9dd3-152b-4442-ba47-44de453f5368" />
+Aplicación web de blog desarrollada con Python y Django como proyecto final del modulo de Python.
 
 ## Tecnologías utilizadas
 
