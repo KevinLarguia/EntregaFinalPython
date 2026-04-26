@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Acerca de mí{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="text-center mb-5">
+            <div class="about-avatar mx-auto mb-4">
+                <i class="fas fa-user-circle fa-7x text-primary"></i>
+            </div>
+            <h1 class="display-6 fw-bold">Kevin Larguia</h1>
+            <p class="lead text-muted">Conocé al creador de este blog</p>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="h4 mb-3 text-primary">
+                    <i class="fas fa-star me-2"></i>¿Quién soy?
+                </h2>
+                <p class="text-muted">
+                    Soy un apasionado del desarrollo web y la programación con Python.
+                    Actualmente cursando la Diplomatura en Data Science, donde aprendí a construir
+                    aplicaciones web robustas con Django.
+                </p>
+                <p class="text-muted">
+                    Este blog es mi proyecto final del módulo de Python, donde aplico los conocimientos
+                    adquiridos durante la diplomatura: modelos, vistas, templates, autenticación y mucho más.
+                </p>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="h4 mb-3 text-primary">
+                    <i class="fas fa-code me-2"></i>Tecnologías
+                </h2>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fab fa-python fa-2x text-warning me-3"></i>
+                            <div>
+                                <strong>Python</strong>
+                                <div class="text-muted small">Lenguaje principal</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-leaf fa-2x text-success me-3"></i>
+                            <div>
+                                <strong>Django</strong>
+                                <div class="text-muted small">Framework web</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fab fa-bootstrap fa-2x text-purple me-3" style="color:#7952b3"></i>
+                            <div>
+                                <strong>Bootstrap 5</strong>
+                                <div class="text-muted small">Framework CSS</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-database fa-2x text-info me-3"></i>
+                            <div>
+                                <strong>SQLite</strong>
+                                <div class="text-muted small">Base de datos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="h4 mb-3 text-primary">
+                    <i class="fas fa-envelope me-2"></i>Contacto
+                </h2>
+                <p class="text-muted mb-3">
+                    ¿Querés comunicarte? Podés enviarme un mensaje directamente desde el sitio.
+                </p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'messaging:compose' %}" class="btn btn-primary">
+                    <i class="fas fa-paper-plane me-2"></i>Enviar mensaje
+                </a>
+                {% else %}
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary me-2">
+                    <i class="fas fa-user-plus me-2"></i>Registrarse
+                </a>
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar sesión
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="{% url 'pages:list' %}" class="btn btn-outline-primary">
+                <i class="fas fa-newspaper me-2"></i>Ver todas las páginas
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

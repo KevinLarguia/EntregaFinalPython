@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Bandeja de entrada{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2 mb-0">
+        <i class="fas fa-inbox me-2 text-primary"></i>Mensajes
+        {% if unread_count %}
+        <span class="badge bg-danger ms-2">{{ unread_count }}</span>
+        {% endif %}
+    </h1>
+    <div class="d-flex gap-2">
+        <a href="{% url 'messaging:sent' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-paper-plane me-2"></i>Enviados
+        </a>
+        <a href="{% url 'messaging:compose' %}" class="btn btn-primary btn-sm">
+            <i class="fas fa-pencil-alt me-2"></i>Nuevo mensaje
+        </a>
+    </div>
+</div>
+
+{% if messages_list %}
+<div class="card border-0 shadow-sm">
+    <div class="list-group list-group-flush">
+        {% for msg in messages_list %}
+        <a href="{% url 'messaging:detail' msg.pk %}"
+           class="list-group-item list-group-item-action {% if not msg.read %}fw-bold bg-light{% endif %}">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        {% if not msg.read %}
+                        <span class="badge bg-primary rounded-pill" style="font-size:0.65rem;">Nuevo</span>
+                        {% endif %}
+                        <span class="{% if not msg.read %}text-dark{% else %}text-muted{% endif %}">
+                            <i class="fas fa-user-circle me-1 text-primary"></i>
+                            <strong>{{ msg.sender.username }}</strong>
+                        </span>
+                    </div>
+                    <div class="text-truncate" style="max-width: 500px;">
+                        <span class="{% if not msg.read %}text-dark{% else %}text-muted{% endif %}">
+                            {{ msg.subject }}
+                        </span>
+                        <span class="text-muted fw-normal"> &mdash; {{ msg.content|truncatechars:60 }}</span>
+                    </div>
+                </div>
+                <small class="text-muted ms-3 text-nowrap">
+                    {{ msg.created_at|date:"d/m/Y H:i" }}
+                </small>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+    <h3 class="text-muted">Tu bandeja de entrada está vacía.</h3>
+    <a href="{% url 'messaging:compose' %}" class="btn btn-primary mt-3">
+        <i class="fas fa-pencil-alt me-2"></i>Escribir un mensaje
+    </a>
+</div>
+{% endif %}
+{% endblock %}

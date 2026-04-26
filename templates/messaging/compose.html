@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Nuevo Mensaje{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'messaging:inbox' %}">Mensajes</a></li>
+                <li class="breadcrumb-item active">Nuevo Mensaje</li>
+            </ol>
+        </nav>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h1 class="h3 mb-0">
+                    <i class="fas fa-pencil-alt me-2 text-primary"></i>Nuevo Mensaje
+                </h1>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.receiver.id_for_label }}" class="form-label fw-semibold">
+                            Para <span class="text-danger">*</span>
+                        </label>
+                        {{ form.receiver }}
+                        {% if form.receiver.errors %}
+                        <div class="text-danger small mt-1">{{ form.receiver.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.subject.id_for_label }}" class="form-label fw-semibold">
+                            Asunto <span class="text-danger">*</span>
+                        </label>
+                        {{ form.subject }}
+                        {% if form.subject.errors %}
+                        <div class="text-danger small mt-1">{{ form.subject.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.content.id_for_label }}" class="form-label fw-semibold">
+                            Mensaje <span class="text-danger">*</span>
+                        </label>
+                        {{ form.content }}
+                        {% if form.content.errors %}
+                        <div class="text-danger small mt-1">{{ form.content.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger small">{{ form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="fas fa-paper-plane me-2"></i>Enviar
+                        </button>
+                        <a href="{% url 'messaging:inbox' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

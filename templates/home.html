@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-3 text-center hero-section rounded-3 mb-5">
+    <div class="py-4">
+        <i class="fas fa-feather-alt display-4 text-primary mb-3"></i>
+        <h1 class="display-5 fw-bold">Bienvenido a Mi Blog</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">
+                Un espacio para compartir ideas, reflexiones y conocimiento.
+                Explorá las páginas y descubrí contenido interesante.
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{% url 'pages:list' %}" class="btn btn-primary btn-lg px-4 gap-3">
+                    <i class="fas fa-newspaper me-2"></i>Ver Páginas
+                </a>
+                <a href="{% url 'about' %}" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="fas fa-user me-2"></i>Acerca de mí
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if recent_pages %}
+<section>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0"><i class="fas fa-clock me-2 text-primary"></i>Últimas Páginas</h2>
+        <a href="{% url 'pages:list' %}" class="btn btn-outline-primary btn-sm">
+            Ver todas <i class="fas fa-arrow-right ms-1"></i>
+        </a>
+    </div>
+    <div class="row g-4">
+        {% for page in recent_pages %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 card-hover">
+                {% if page.image %}
+                <img src="{{ page.image.url }}" class="card-img-top" alt="{{ page.title }}"
+                     style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                     style="height: 200px;">
+                    <i class="fas fa-image fa-3x text-muted"></i>
+                </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold">{{ page.title }}</h5>
+                    {% if page.subtitle %}
+                    <p class="card-subtitle text-muted mb-2 small">{{ page.subtitle }}</p>
+                    {% endif %}
+                    <p class="card-text text-muted small mt-auto">
+                        <i class="fas fa-calendar-alt me-1"></i>{{ page.created_at|date:"d/m/Y" }}
+                        &nbsp;&bull;&nbsp;
+                        <i class="fas fa-user me-1"></i>{{ page.author.username }}
+                    </p>
+                    <a href="{% url 'pages:detail' page.pk %}" class="btn btn-primary btn-sm mt-2">
+                        Leer más <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
+    <h3 class="text-muted">Todavía no hay páginas publicadas.</h3>
+    {% if user.is_authenticated %}
+    <a href="{% url 'pages:create' %}" class="btn btn-primary mt-3">
+        <i class="fas fa-plus me-2"></i>Crear la primera página
+    </a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
